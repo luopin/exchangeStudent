@@ -3,6 +3,7 @@
 namespace app\common;
 
 use Yii;
+use yii\helpers\Json;
 
 class Helper
 {
@@ -16,6 +17,16 @@ class Helper
 	public static function formatJson($status = 200, $message = '', $data = array())
 	{
 		return array('status' => $status, 'message' => $message, 'data' => $data);
+	}
+
+	/**
+	 * @param int $status
+	 * @param string $message
+	 * @param string $data
+	 */
+	public static function arrayToJson($status = 502, $message = '请求不合法', $data = '')
+	{
+		echo Json::encode(array('status' => $status, 'message' => $message, 'data' => $data));exit;
 	}
 
 }

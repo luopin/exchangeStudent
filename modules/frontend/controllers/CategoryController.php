@@ -3,12 +3,12 @@
 namespace app\modules\frontend\controllers;
 
 use app\common\Helper;
-use app\controllers\BaseAPIController;
+use app\controllers\BaseController;
 use app\models\Category;
 use app\models\CategoryCollege;
 use Yii;
 
-class CategoryController extends BaseAPIController
+class CategoryController extends BaseController
 {
 	/**
 	 * 查询分类列表

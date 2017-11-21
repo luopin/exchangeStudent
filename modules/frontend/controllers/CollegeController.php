@@ -3,11 +3,11 @@
 namespace app\modules\frontend\controllers;
 
 use app\common\Helper;
-use app\controllers\BaseAPIController;
+use app\controllers\BaseController;
 use app\models\College;
 use Yii;
 
-class CollegeController extends BaseAPIController
+class CollegeController extends BaseController
 {
 	/**
 	 * 首页学校排名
@@ -19,7 +19,7 @@ class CollegeController extends BaseAPIController
 
 		$data['usTop'] = $model->getList($fields,'usRank', 20);
 		$data['wlTop'] = $model->getList($fields,'wlRank', 20);
-		$data['highTop'] = $model->getList($fields,'rank', 10);
+		$data['highTop'] = $model->getList($fields,'rank', 20);
 
 		return Helper::formatJson(200, 'Ok', $data);
 	}
@@ -38,7 +38,7 @@ class CollegeController extends BaseAPIController
 	/**
 	 * 查询院校列表
 	 */
-	public function actionIndex($keywords = null, $type = null, $orderBy = 'rank', $pageSize = 12)
+	public function actionIndex($keywords = null, $type = null, $orderBy = 'rank', $pageSize = 16)
 	{
 		$where = array();
 		if(isset($type)){

@@ -22,7 +22,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'ZeEZjw5laEgxDwetTSyLI8SIlaq-kELY',
+	        'cookieValidationKey' => 'ZeEZjw5laEgxDwetTSyLI8SIlaq-kELY',
             'parsers' => [
 	            'application/json' => 'yii\web\JsonParser',
             ],

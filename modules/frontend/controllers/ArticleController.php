@@ -5,9 +5,9 @@ namespace app\modules\frontend\controllers;
 use app\common\Helper;
 use app\models\Article;
 use Yii;
-use app\controllers\BaseAPIController;
+use app\controllers\BaseController;
 
-class ArticleController extends BaseAPIController
+class ArticleController extends BaseController
 {
 	/**
 	 * 查询首页文章
