@@ -24,7 +24,7 @@ class ArticleController extends BaseController
 	 */
 	public function actionNews()
 	{
-		$data = (new Article())->getList(['type' => ARTICLE_TYPE['news']], 4);
+		$data = (new Article())->getList(['type' => ARTICLE_TYPE['news']], 1);
 
 		return Helper::formatJson(200, 'Ok', $data);
 	}
