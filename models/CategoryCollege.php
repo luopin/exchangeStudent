@@ -97,7 +97,7 @@ class CategoryCollege extends \yii\db\ActiveRecord
 		}
 
 	    $where['a.cateId'] = intval($cateId);
-	    if(isset($type)){
+	    if(isset($type) && $type != null){
 		    $where['a.type'] = $type;
 	    }
 
