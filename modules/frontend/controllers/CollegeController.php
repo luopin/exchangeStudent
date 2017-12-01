@@ -29,7 +29,7 @@ class CollegeController extends BaseController
 	 */
 	public function actionHotRecommend()
 	{
-		$fields = array('id', 'name', 'enName', 'logo');
+		$fields = array('id', 'name', 'enName', 'logo', 'url');
 		$data = (new College())->getList($fields,'qsRank', 16);
 
 		return Helper::formatJson(200, 'Ok', $data);
