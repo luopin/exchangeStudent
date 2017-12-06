@@ -29,4 +29,27 @@ class ArticleController extends BaseController
 		return Helper::formatJson(200, 'Ok', $data);
 	}
 
+	/**
+	 * 详情
+	 * @param $articleId
+	 *
+	 * @return array
+	 */
+	public function actionDetail($articleId)
+	{
+		$info = Article::findOne(['id' => intval($articleId)]);
+
+		return Helper::formatJson(200, 'Ok', $info);
+	}
+
+	/**
+	 * 新闻中心
+	 */
+	public function actionNewsCenter($type = ARTICLE_TYPE['news'], $pageSize = 20)
+	{
+		$data = (new Article())->getNewsListByType($type, $pageSize);
+
+		return Helper::formatJson(200, 'Ok', $data);
+	}
+
 }

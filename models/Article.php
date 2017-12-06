@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\Pagination;
 
 /**
  * This is the model class for table "article".
@@ -72,6 +73,27 @@ class Article extends \yii\db\ActiveRecord
 	    $row['information'] = $this->getList(['type' => ARTICLE_TYPE['information']], 1);
 
         return $row;
+    }
+
+	/**
+	 * 新闻中心
+	 * @param $type
+	 * @param int $pageSize
+	 *
+	 * @return mixed
+	 */
+    public function getNewsListByType($type, $pageSize = 20)
+    {
+    	$query = self::find()->where(array('type' => intval($type)));
+    	$count = $query->count('id');
+
+    	$pagination = new Pagination(['totalCount' => $count, 'defaultPageSize' => $pageSize]);
+    	$rows['current']['list'] = $query->orderBy('createTime DESC')->offset($pagination->offset)->limit($pageSize)->all();
+    	$rows['current']['totalRows'] = $count;
+
+    	//$rows['rightItem1']['row'] = $this->getList(array('type',))
+
+    	return $rows;
     }
 
 }
