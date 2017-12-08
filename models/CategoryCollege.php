@@ -84,6 +84,8 @@ class CategoryCollege extends \yii\db\ActiveRecord
 	 * @param null $keywords
 	 * @param string $orderBy
 	 * @param int $pageSize
+	 *
+	 * @return array
 	 */
     public function getListByCateId($cateId, $type = null, $keywords = null, $orderBy = 'b.id DESC', $pageSize = 10)
     {
@@ -96,12 +98,18 @@ class CategoryCollege extends \yii\db\ActiveRecord
 			$query->orWhere(['like', 'a.name', $keywords])->orWhere(['like', 'a.enName', $keywords]);
 		}
 
-	    $where['a.cateId'] = intval($cateId);
+		if($cateId){
+			$where['a.cateId'] = intval($cateId);
+		}
+
 	    if(isset($type) && $type != null){
 		    $where['b.type'] = $type;
 	    }
 
-	    $query->andWhere($where);
+	    if($where){
+		    $query->andWhere($where);
+	    }
+
 		$query->leftJoin(College::tableName() . ' as b', 'b.id = a.collegeId');
 
 		$count = $query->count('b.id');

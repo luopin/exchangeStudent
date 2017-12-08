@@ -4,6 +4,7 @@ namespace app\modules\frontend\controllers;
 
 use app\common\Helper;
 use app\controllers\BaseController;
+use app\models\CategoryCollege;
 use app\models\College;
 use Yii;
 
@@ -67,8 +68,13 @@ class CollegeController extends BaseController
 	/**
 	 * 搜索
 	 */
-	public function actionSearch()
+	public function actionSearch($cateId = null, $keywords)
 	{
+		if(!isset($keywords)){
+			return Helper::formatJson(1001, '搜索关键字不能为空');
+		}
 
+		$list = (new CategoryCollege())->getListByCateId($cateId, null, $keywords);
+		return Helper::formatJson(200, 'Ok', $list);
 	}
 }
