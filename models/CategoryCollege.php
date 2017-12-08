@@ -95,7 +95,7 @@ class CategoryCollege extends \yii\db\ActiveRecord
 		    ->alias('a');
 
 		if(isset($keywords)){
-			$query->orWhere(['like', 'a.name', $keywords])->orWhere(['like', 'a.enName', $keywords]);
+			$query->orWhere(['like', 'b.name', $keywords])->orWhere(['like', 'b.enName', $keywords]);
 		}
 
 		if($cateId){
