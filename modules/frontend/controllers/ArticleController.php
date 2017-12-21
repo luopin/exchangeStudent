@@ -22,9 +22,9 @@ class ArticleController extends BaseController
 	/**
 	 * 新闻动态
 	 */
-	public function actionNews()
+	public function actionNews($type = ARTICLE_TYPE['news'], $pageSize = 20)
 	{
-		$data = (new Article())->getList(['type' => ARTICLE_TYPE['news']], 1);
+		$data = (new Article())->getNewsListByType($type, $pageSize);
 
 		return Helper::formatJson(200, 'Ok', $data);
 	}
@@ -40,16 +40,6 @@ class ArticleController extends BaseController
 		$info = Article::findOne(['id' => intval($articleId)]);
 
 		return Helper::formatJson(200, 'Ok', $info);
-	}
-
-	/**
-	 * 新闻中心
-	 */
-	public function actionNewsCenter($type = ARTICLE_TYPE['news'], $pageSize = 20)
-	{
-		$data = (new Article())->getNewsListByType($type, $pageSize);
-
-		return Helper::formatJson(200, 'Ok', $data);
 	}
 
 }

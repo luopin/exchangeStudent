@@ -84,14 +84,33 @@ class Article extends \yii\db\ActiveRecord
 	 */
     public function getNewsListByType($type, $pageSize = 20)
     {
+    	$arr = [
+		    ARTICLE_TYPE['news'] => '新闻动态',
+		    ARTICLE_TYPE['enroll'] => '最新录取',
+		    ARTICLE_TYPE['information'] => '留学资讯'
+	    ];
+
     	$query = self::find()->where(array('type' => intval($type)));
     	$count = $query->count('id');
 
     	$pagination = new Pagination(['totalCount' => $count, 'defaultPageSize' => $pageSize]);
     	$rows['current']['list'] = $query->orderBy('createTime DESC')->offset($pagination->offset)->limit($pageSize)->all();
     	$rows['current']['totalRows'] = $count;
+	    $rows['current']['title'] = $arr[$type];
 
-    	//$rows['rightItem1']['row'] = $this->getList(array('type',))
+	    $allType = ARTICLE_TYPE;
+	    $types = array();
+	    foreach($allType as $key => $value){
+	    	if($value != $type){
+	    		$types[] = $value;
+		    }
+	    }
+
+    	$rows['other']['item1']['info'] = $this->getList(array('type' => $types[0]), 1)[0];
+	    $rows['other']['item1']['title'] = $arr[$types[0]];
+
+	    $rows['other']['item2']['info'] = $this->getList(array('type' => $types[1]), 1)[0];
+	    $rows['other']['item2']['title'] = $arr[$types[1]];
 
     	return $rows;
     }
