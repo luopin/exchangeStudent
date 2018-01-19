@@ -27,7 +27,7 @@ class ImportController extends BaseAPIController
 		}
 
 		$letter = range('A', 'Z');
-		$fields = array('cateId', 'collegeId', 'cost', 'target', 'content', 'quarter', 'requirement', 'language', 'gpa', 'applyEndDate', 'costEndDate', 'courseDate', 'costRemarks', 'remarks');
+		$fields = array('collegeId', 'cateId', 'cost', 'target', 'content', 'quarter', 'requirement', 'language', 'gpa', 'applyEndDate', 'costEndDate', 'courseDate', 'costRemarks', 'remarks');
 		$data = array();
 
 		foreach($excelFile as $file){
@@ -45,6 +45,7 @@ class ImportController extends BaseAPIController
 			$highestRow = $objWorksheet->getHighestRow();
 			// 取得总列数
 			$highestColumn = $objWorksheet->getHighestColumn();
+
 			for($y = 2; $y <= $highestRow; $y++){
 				$rows = array();
 				for($x = 1; $x < 26; $x++){
@@ -53,12 +54,14 @@ class ImportController extends BaseAPIController
 					if($cellValue instanceof \PHPExcel_RichText){
 						$cellValue = $cellValue->__toString();
 					}
-					$rows[] = $cellValue;
-					//$rows[] = $letter[$x] . $y;
-					$rows = array_filter($rows);
+
 					if($letter[$x] === $highestColumn){
 						break;
 					}
+					$rows[] = $cellValue ? $cellValue : null;
+					//$rows[] = $letter[$x] . $y;
+
+					//$rows = array_filter($rows);
 				}
 
 				$data[] = $rows;

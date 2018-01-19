@@ -46,7 +46,7 @@ class CollegeController extends BaseController
 			$where['type'] = $type;
 		}
 
-		$fields = array('id', 'name', 'enName', 'logo', 'follow', 'area', 'natures', 'cost', 'acceptanceRate', 'authentication', 'rank');
+		$fields = array('id', 'name', 'enName', 'logo', 'follow', 'area', 'natures', 'cost', 'acceptanceRate', 'authentication', 'rank', 'url');
 		$list = (new College())->getPageList($keywords, $where, $orderBy, $fields, $pageSize);
 
 		return Helper::formatJson(200, 'Ok', $list);
