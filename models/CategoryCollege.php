@@ -120,6 +120,7 @@ class CategoryCollege extends \yii\db\ActiveRecord
 		$list = array();
 		if($rows){
 			foreach($rows as $key => $value){
+				$rows[$key]['logo'] = Yii::$app->request->hostInfo . '/images/logo/' . $value['logo'];
 				$collegeIds[] = $value['id'];
 				$value['majors'] = array();
 

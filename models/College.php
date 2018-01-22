@@ -90,7 +90,8 @@ class College extends \yii\db\ActiveRecord
 	/**
 	 * 特殊字段处理
 	 */
-    public function fields() {
+    public function fields()
+    {
 	    $fields = parent::fields();
 	    $fields['acceptanceRate'] = function (){
 	        return $this->acceptanceRate * 100 . '%';
