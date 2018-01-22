@@ -27,7 +27,14 @@ class ImportController extends BaseAPIController
 		}
 
 		$letter = range('A', 'Z');
-		$fields = array('collegeId', 'cateId', 'cost', 'target', 'content', 'quarter', 'requirement', 'language', 'gpa', 'applyEndDate', 'costEndDate', 'courseDate', 'costRemarks', 'remarks');
+		//college table
+		//$fields = array('relateId', 'name', 'enName', 'usRank', 'qsRank', 'rank', 'wlRank', 'description', 'officialUrl', 'url', 'type', 'country', 'area', 'natures', 'createYear', 'cost', 'acceptanceRate', 'authentication', 'logo');
+
+		//category_college table
+		$fields = array('relateId', 'cateId', 'cost', 'target', 'content', 'quarter', 'requirement', 'language', 'gpa', 'applyEndDate', 'costEndDate', 'courseDate', 'costRemarks');
+
+		//major table
+		$fields = array('relateId', 'name', 'usRank', 'globalRank');
 		$data = array();
 
 		foreach($excelFile as $file){
