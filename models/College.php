@@ -93,13 +93,18 @@ class College extends \yii\db\ActiveRecord
     public function fields()
     {
 	    $fields = parent::fields();
-	    $fields['acceptanceRate'] = function (){
-	        return $this->acceptanceRate * 100 . '%';
-	    };
 
-	    $fields['logo'] = function(){
-	    	return Yii::$app->request->hostInfo . '/images/logo/' . $this->logo;
-	    };
+	    if(isset($fields['acceptanceRate'])){
+		    $fields['acceptanceRate'] = function (){
+			    return $this->acceptanceRate * 100 . '%';
+		    };
+	    }
+
+	    if(isset($fields['logo'])){
+		    $fields['logo'] = function(){
+			    return Yii::$app->request->hostInfo . '/images/logo/' . $this->logo;
+		    };
+	    }
 
 	    return $fields;
     }

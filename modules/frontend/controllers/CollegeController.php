@@ -16,7 +16,7 @@ class CollegeController extends BaseController
 	public function actionTop20()
 	{
 		$model = new College();
-		$fields = array('id', 'name');
+		$fields = array('id', 'name', 'url');
 
 		$data['usTop'] = $model->getList($fields,'usRank', 20);
 		$data['wlTop'] = $model->getList($fields,'wlRank', 20);
