@@ -96,9 +96,11 @@ class SignController extends BaseController
         $info->fullName = trim($fullName);
         $info->mobile = trim($mobile);
         $info->state = 1;
-        $info->save();
-
-        return Helper::formatJson(200, 'ok');
+        if($info->save()){
+            return Helper::formatJson(200, 'ok');
+        }else{
+            return Helper::formatJson(1007, $info->getFirstErrors());
+        }
     }
 
     /**
