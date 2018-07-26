@@ -32,7 +32,7 @@ class Sign extends \yii\db\ActiveRecord
     {
         return [
             ['state', 'default', 'value' => 1],
-            [['country', 'education', 'grade', 'fullName', 'mobile'], 'required'],
+            [['country', 'education', 'grade'], 'required'],
             [['country'], 'string', 'max' => 10],
             [['education', 'grade', 'fullName'], 'string', 'max' => 5],
             [['mobile'], 'string', 'max' => 11],

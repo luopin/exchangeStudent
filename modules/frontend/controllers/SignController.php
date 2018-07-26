@@ -18,6 +18,14 @@ class SignController extends BaseController
 		if(Yii::$app->request->isPost){
 			$model = new Sign();
 			$data = Yii::$app->request->post();
+			if(!isset($data['fullName']) || !$data['fullName']){
+			    return Helper::formatJson(1007, '缺少必要参数');
+            }
+
+            if(!isset($data['mobile']) || !$data['mobile']){
+                return Helper::formatJson(1007, '缺少必要参数');
+            }
+
 			if($model->load($data, '') && $model->validate()){
 				if($model->save()){
 					$this->sendEmail($data['fullName'], $data['country'], $data['education'], $data['grade'], $data['mobile']);
@@ -61,12 +69,12 @@ class SignController extends BaseController
             return Helper::formatJson(1007, '缺少必要参数');
         }
 
-        $id = Yii::$app->db->createCommand()->insert('sign', [
-            'country' => $country,
-            'education' => $education,
-            'grade' => $grade,
-            'state' => 2
-        ])->execute();
+        $model = new Sign();
+        $model->country = $country;
+        $model->education = $education;
+        $model->grade = $grade;
+        $model->state = 2;
+        $id = $model->save();
 
         return Helper::formatJson(200, 'ok', ['id' => $id]);
     }
