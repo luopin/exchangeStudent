@@ -66,7 +66,7 @@ class SignController extends BaseController
             'education' => $education,
             'grade' => $grade,
             'state' => 2
-        ]);
+        ])->execute();
 
         return Helper::formatJson(200, 'ok', ['id' => $id]);
     }
