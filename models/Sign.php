@@ -13,6 +13,7 @@ use Yii;
  * @property string $grade
  * @property string $fullName
  * @property string $mobile
+ * @property integer $state
  */
 class Sign extends \yii\db\ActiveRecord
 {
@@ -30,6 +31,7 @@ class Sign extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['state', 'default', 'value' => 1],
             [['country', 'education', 'grade', 'fullName', 'mobile'], 'required'],
             [['country'], 'string', 'max' => 10],
             [['education', 'grade', 'fullName'], 'string', 'max' => 5],
@@ -44,11 +46,11 @@ class Sign extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'country' => 'Country',
-            'education' => 'Education',
-            'grade' => 'Grade',
-            'fullName' => 'Full Name',
-            'mobile' => 'Mobile',
+            'country' => '国家',
+            'education' => '学历',
+            'grade' => '年级',
+            'fullName' => '姓名',
+            'mobile' => '手机',
         ];
     }
 }
