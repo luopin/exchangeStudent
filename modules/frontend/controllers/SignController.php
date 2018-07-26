@@ -74,9 +74,9 @@ class SignController extends BaseController
         $model->education = $education;
         $model->grade = $grade;
         $model->state = 2;
-        $id = $model->save();
+        $model->save();
 
-        return Helper::formatJson(200, 'ok', ['id' => $id]);
+        return Helper::formatJson(200, 'ok', ['id' => $model->id]);
     }
 
     /**
