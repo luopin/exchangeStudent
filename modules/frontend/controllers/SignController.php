@@ -117,7 +117,10 @@ class SignController extends BaseController
 
         $count = $query->count('id');
         $pagination = new Pagination(['totalCount' => $count, 'pageSizeParam' => 'pageSize']);
-        $list = $query->offset($pagination->offset)->limit($pagination->getPageSize())->all();
+        $list = $query->offset($pagination->offset)
+            ->limit($pagination->getPageSize())
+            ->orderBy('createTime DESC')
+            ->all();
 
         $data = ['rows' => $list, 'count' => $count];
         return Helper::formatJson(200, 'ok', $data);
