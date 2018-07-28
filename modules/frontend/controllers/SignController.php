@@ -115,6 +115,7 @@ class SignController extends BaseController
             $query->orWhere(['like', 'mobile', trim($keyword)]);
         }
 
+        $query->andWhere(['state' => 1]);
         $count = $query->count('id');
         $pagination = new Pagination(['totalCount' => $count, 'pageSizeParam' => 'pageSize']);
         $list = $query->offset($pagination->offset)
