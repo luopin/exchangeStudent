@@ -127,4 +127,33 @@ class SignController extends BaseController
         return Helper::formatJson(200, 'ok', $data);
     }
 
+    /**
+     * 设置已联系
+     *
+     * @return array
+     */
+    public function actionUpdate()
+    {
+        $id = Yii::$app->request->post('id');
+        $info = Sign::findOne($id);
+        if(!$info){
+            return Helper::formatJson(1007, $info->getFirstErrors());
+        }
+
+        $info->isContacted = 2;
+        $info->save();
+
+        return Helper::formatJson(200, 'ok');
+    }
+
+    /**
+     * 导出数据
+     *
+     * @return array
+     */
+    public function actionExport()
+    {
+        return Helper::formatJson(200, 'ok', ['url' => '']);
+    }
+
 }
