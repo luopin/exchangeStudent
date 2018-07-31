@@ -151,9 +151,64 @@ class SignController extends BaseController
      *
      * @return array
      */
-    public function actionExport()
+    public function actionExport($keyword = '')
     {
-        return Helper::formatJson(200, 'ok', ['url' => '']);
+	    $query = Sign::find();
+	    if($keyword != ''){
+		    $query->orWhere(['like', 'fullName', trim($keyword)]);
+		    $query->orWhere(['like', 'mobile', trim($keyword)]);
+	    }
+
+	    $query->andWhere(['state' => 1]);
+		$items = $query->orderBy('createTime DESC')->asArray()->all();
+
+	    $excelObj = new \PHPExcel();
+	    $sheet = $excelObj->setActiveSheetIndex();
+
+	    //ID，用户名，所属机构，部门，属性，注册时间，状态，首次注册平台
+	    $sheet->setCellValue('A1','ID');
+	    $sheet->setCellValue('B1','姓名');
+	    $sheet->setCellValue('C1','手机');
+	    $sheet->setCellValue('D1','意向国家');
+	    $sheet->setCellValue('E1','学历');
+	    $sheet->setCellValue('F1','在读年级');
+	    $sheet->setCellValue('G1','报名时间');
+	    $sheet->setCellValue('H1','状态');
+
+	    $sheet->getColumnDimension('C')->setWidth(20);
+	    $sheet->getColumnDimension('G')->setWidth(30);
+
+
+	    $num = 2;
+	    foreach($items as $k => $row){
+		    $sheet->setCellValue('A' . $num, $row['id']);
+		    $sheet->setCellValue('B' . $num, $row['fullName']);
+		    $sheet->setCellValueExplicit('C' . $num, $row['mobile'],\PHPExcel_Cell_DataType::TYPE_STRING);
+		    $sheet->setCellValueExplicit('D' . $num, $row['country']);
+		    $sheet->setCellValue('E' . $num, $row['education']);
+		    $sheet->setCellValue('F' . $num, $row['grade']);
+		    $sheet->setCellValue('G' . $num, $row['createTime']);
+		    $sheet->setCellValue('H' . $num, $row['isContacted'] == 1 ? '未联系' : '已联系');
+		    $num++;
+	    }
+
+	    $excelObj->createSheet();
+
+	    $filename = '报名数据.xlsx';
+	    $path = 'data/download/' . date('Ymd') . '/';
+	    if(!file_exists($path)){
+		    mkdir($path, 0755, true);
+	    }
+
+	    $fullPath = $path . $filename;
+	    if(file_exists($fullPath)){
+		    @unlink($fullPath);
+	    }
+
+	    $objWriter = \PHPExcel_IOFactory::createWriter($excelObj, 'Excel2007');
+	    $objWriter->save($fullPath);
+
+        return Helper::formatJson(200, 'ok', ['url' => Yii::$app->request->getHostInfo() . '/' . $fullPath]);
     }
 
 }
