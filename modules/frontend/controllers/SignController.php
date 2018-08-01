@@ -87,14 +87,18 @@ class SignController extends BaseController
         $id = Yii::$app->request->post('id');
         $fullName = Yii::$app->request->post('fullName');
         $mobile = Yii::$app->request->post('mobile');
+        $school = Yii::$app->request->post('school');
+        $major = Yii::$app->request->post('major');
 
-        if(!$id || !$fullName || !$mobile){
+        if(!$id || !$fullName || !$mobile || !$school || !$major){
             return Helper::formatJson(1007, '缺少必要参数');
         }
 
         $info = Sign::findOne($id);
         $info->fullName = trim($fullName);
         $info->mobile = trim($mobile);
+	    $info->school = trim($school);
+	    $info->major = trim($major);
         $info->state = 1;
         if($info->save()){
             return Helper::formatJson(200, 'ok');
@@ -172,11 +176,15 @@ class SignController extends BaseController
 	    $sheet->setCellValue('D1','意向国家');
 	    $sheet->setCellValue('E1','学历');
 	    $sheet->setCellValue('F1','在读年级');
-	    $sheet->setCellValue('G1','报名时间');
-	    $sheet->setCellValue('H1','状态');
+	    $sheet->setCellValue('G1','学校');
+	    $sheet->setCellValue('H1','专业');
+	    $sheet->setCellValue('I1','报名时间');
+	    $sheet->setCellValue('J1','状态');
 
 	    $sheet->getColumnDimension('C')->setWidth(20);
 	    $sheet->getColumnDimension('G')->setWidth(30);
+	    $sheet->getColumnDimension('H')->setWidth(30);
+	    $sheet->getColumnDimension('I')->setWidth(30);
 
 
 	    $num = 2;
@@ -187,8 +195,10 @@ class SignController extends BaseController
 		    $sheet->setCellValueExplicit('D' . $num, $row['country']);
 		    $sheet->setCellValue('E' . $num, $row['education']);
 		    $sheet->setCellValue('F' . $num, $row['grade']);
-		    $sheet->setCellValue('G' . $num, $row['createTime']);
-		    $sheet->setCellValue('H' . $num, $row['isContacted'] == 1 ? '未联系' : '已联系');
+		    $sheet->setCellValue('G' . $num, $row['school']);
+		    $sheet->setCellValue('H' . $num, $row['major']);
+		    $sheet->setCellValue('I' . $num, $row['createTime']);
+		    $sheet->setCellValue('J' . $num, $row['isContacted'] == 1 ? '未联系' : '已联系');
 		    $num++;
 	    }
 

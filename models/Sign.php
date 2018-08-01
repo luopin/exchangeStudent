@@ -13,6 +13,8 @@ use Yii;
  * @property string $grade
  * @property string $fullName
  * @property string $mobile
+ * @property string $school
+ * @property string $major
  * @property integer $state
  */
 class Sign extends \yii\db\ActiveRecord
